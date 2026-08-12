@@ -1,0 +1,58 @@
+/* 1. Main Background */
+
+.stApp {
+    background-color: #000000;
+    color: #FAFAFA;
+}
+
+/* 2. Post Header (Avatar + Username) */
+.ig-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 12px;
+}
+.ig-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin-right: 12px;
+    border: 1px solid #262626;
+}
+.ig-username {
+    font-weight: 600;
+    font-size: 14px;
+    color: #FAFAFA;
+    letter-spacing: 0.5px;
+}
+
+/* 3. Caption & Likes */
+.ig-caption-box {
+    font-size: 14px;
+    padding-top: 8px;
+    line-height: 1.5;
+}
+.ig-bold {
+    font-weight: 600;
+    margin-right: 6px;
+}
+
+/* 4. Sleek Minimalist Buttons */
+.stButton > button {
+    background-color: #121212;
+    color: #FAFAFA;
+    border: 1px solid #262626;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.stButton > button:hover {
+    border: 1px solid #FAFAFA;
+    background-color: #000000;
+    color: #FAFAFA;
+}
+
+/* 5. Clean up Image Borders */
+[data-testid="stImage"] img {
+    border-radius: 4px;
+    border: 1px solid #262626;
+}
