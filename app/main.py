@@ -18,7 +18,7 @@ app = FastAPI(
 # ==========================================
 # <-- 2. INITIALIZED DB HERE 
 # (Note: If you usually import your db from another file, like `from app.database import db`, you can replace these two lines with that import instead).
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient("https://ai-job-portal-i98p.onrender.com/")
 db = client["ai_job_portal"] 
 
 # Create a folder to store uploaded images

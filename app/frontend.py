@@ -1,8 +1,18 @@
 import streamlit as st
 import requests
 import os # Added to safely handle file paths
+from pymongo import MongoClient
 
-API_URL = "http://127.0.0.1:8000"
+MONGODB_URI = os.getenv("MONGODB_URI")
+
+if not MONGODB_URI:
+    raise RuntimeError("MONGODB_URI is not configured")
+
+client = MongoClient(MONGODB_URI)
+
+db = client["ai_job_portal"]
+
+API_URL = "https://ai-job-portal-i98p.onrender.com"
 
 st.set_page_config(page_title="AI Job Portal", page_icon="🚀", layout="wide")
 

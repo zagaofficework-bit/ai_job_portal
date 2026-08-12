@@ -5,3 +5,6 @@ pydantic[email]
 passlib[bcrypt]
 pyjwt
 python-multipart
+spaCy
+pymongo
+pypdf2
