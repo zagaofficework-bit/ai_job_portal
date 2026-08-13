@@ -1,7 +1,7 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 
 # Connection string for a local MongoDB instance
-MONGO_URL = "mongodb+srv://zagaofficework_db_user:zagaofficework_db_user@cluster0.5e51kba.mongodb.net/?appName=Cluster0"
+MONGO_URL = "https://dashboard.render.com/web/srv-d9u38tnlk1mc73fg18c0/deploys/dep-d9un7om7bikc73b2ahb0"
 
 # Initialize the MongoDB client
 client = AsyncIOMotorClient(MONGO_URL)
