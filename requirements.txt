@@ -2,9 +2,10 @@ fastapi
 uvicorn
 motor
 pydantic[email]
-passlib[bcrypt]
+passlib[bcrypt]==1.7.4
 pyjwt
 python-multipart
 spaCy
 pymongo
 pypdf2
+bcrypt==4.0.1
