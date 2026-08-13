@@ -9,14 +9,10 @@ if not MONGO_URL:
     raise RuntimeError("MONGO_URL environment variable is not configured")
 
 if not MONGO_URL.startswith(("mongodb://", "mongodb+srv://")):
-    raise RuntimeError(
-        f"Invalid MONGO_URL format. It must start with mongodb:// or mongodb+srv://"
-    )
+    raise RuntimeError(...)
 
 client = AsyncIOMotorClient(MONGO_URL)
-
 db = client["job_portal"]
-
 users_collection = db["users"]
 
 API_URL = "https://ai-job-portal-i98p.onrender.com"
