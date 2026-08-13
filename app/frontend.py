@@ -1,16 +1,23 @@
 import streamlit as st
 import requests
 import os # Added to safely handle file paths
-from pymongo import MongoClient
+from motor.motor_asyncio import AsyncIOMotorClient
 
-MONGODB_URI = os.getenv("MONGODB_URI")
+MONGO_URL = os.getenv("MONGO_URL")
 
-if not MONGODB_URI:
-    raise RuntimeError("MONGODB_URI is not configured")
+if not MONGO_URL:
+    raise RuntimeError("MONGO_URL environment variable is not configured")
 
-client = MongoClient(MONGODB_URI)
+if not MONGO_URL.startswith(("mongodb://", "mongodb+srv://")):
+    raise RuntimeError(
+        f"Invalid MONGO_URL format. It must start with mongodb:// or mongodb+srv://"
+    )
 
-db = client["ai_job_portal"]
+client = AsyncIOMotorClient(MONGO_URL)
+
+db = client["job_portal"]
+
+users_collection = db["users"]
 
 API_URL = "https://ai-job-portal-i98p.onrender.com"
 
