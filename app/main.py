@@ -3,7 +3,7 @@ from app.api import auth, resumes
 from app.api import companies, jobs, match, admin  
 from bson import ObjectId
 from fastapi.staticfiles import StaticFiles
-from app.core.database import db  # <-- FIXED: import the working db from database.py instead of creating a broken second client
+from app.core.database import db  # <-- Motor (async) database, shared across the app
 import shutil
 import os
 
@@ -23,14 +23,15 @@ app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 # HR: UPLOAD A NEW SOCIAL POST
 # ==========================================
 @app.get("/posts/")
-def get_all_posts():
+async def get_all_posts():
     try:
         # Check if posts collection exists/has documents safely
-        if "posts" not in db.list_collection_names():
+        collection_names = await db.list_collection_names()
+        if "posts" not in collection_names:
             return []
             
         cursor = db.posts.find().sort("_id", -1)
-        posts = list(cursor)
+        posts = await cursor.to_list(length=None)
         
         for post in posts:
             post["id"] = str(post["_id"])
@@ -44,9 +45,9 @@ def get_all_posts():
 # JOB SEEKER: LIKE A SOCIAL POST
 # ==========================================
 @app.post("/posts/{post_id}/like")
-def like_post(post_id: str):
+async def like_post(post_id: str):
     try:
-        result = db.posts.update_one(
+        result = await db.posts.update_one(
             {"_id": ObjectId(post_id)},
             {"$inc": {"likes": 1}}
         )
@@ -60,10 +61,10 @@ def like_post(post_id: str):
 # ADMIN: FETCH PENDING COMPANIES
 # ==========================================
 @app.get("/companies/pending")
-def get_pending_companies(): 
+async def get_pending_companies(): 
     try:
         cursor = db.companies.find({"is_verified": {"$ne": True}})
-        pending_companies = list(cursor) 
+        pending_companies = await cursor.to_list(length=None)
         
         for comp in pending_companies:
             comp["id"] = str(comp["_id"])
@@ -88,11 +89,11 @@ app.include_router(admin.router, prefix="/admin", tags=["Admin"])
 # ADMIN: FETCH PLATFORM STATISTICS
 # ==========================================
 @app.get("/admin/stats")
-def get_platform_stats():
+async def get_platform_stats():
     try:
         # Count documents in the database collections
-        total_users = db.users.count_documents({})
-        active_jobs = db.jobs.count_documents({})
+        total_users = await db.users.count_documents({})
+        active_jobs = await db.jobs.count_documents({})
         
         return {
             "total_users": total_users,
