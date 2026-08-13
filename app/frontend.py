@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import os # Added to safely handle file paths
 
-API_URL = "https://ai-job-portal-i98p.onrender.com"
+API_URL = "https://ai-job-portal-i98p.onrender.com/api/v2"
 
 st.set_page_config(page_title="AI Job Portal", page_icon="🚀", layout="wide")
 
@@ -19,7 +19,7 @@ def load_css(file_name):
         st.warning(f"CSS file not found: {file_name}")
 
 # Execute the function to apply your styles!
-load_css("../assets/style.css") 
+# load_css("../assets/style.css") 
 
 # ==========================================
 #          SESSION STATE (MEMORY)
