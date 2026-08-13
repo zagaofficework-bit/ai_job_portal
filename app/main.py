@@ -3,7 +3,7 @@ from app.api import auth, resumes
 from app.api import companies, jobs, match, admin  
 from bson import ObjectId
 from fastapi.staticfiles import StaticFiles
-from pymongo import MongoClient # <-- 1. ADDED PYMONGO IMPORT
+from app.core.database import db  # <-- FIXED: import the working db from database.py instead of creating a broken second client
 import shutil
 import os
 
@@ -12,14 +12,6 @@ app = FastAPI(
     description="Backend for the AI-powered Job Portal and Resume Analyzer",
     version="1.0.0"
 )
-
-# ==========================================
-# DATABASE CONNECTION
-# ==========================================
-# <-- 2. INITIALIZED DB HERE 
-# (Note: If you usually import your db from another file, like `from app.database import db`, you can replace these two lines with that import instead).
-client = MongoClient("https://ai-job-portal-i98p.onrender.com/")
-db = client["ai_job_portal"] 
 
 # Create a folder to store uploaded images
 os.makedirs("uploads", exist_ok=True)
@@ -67,7 +59,6 @@ def like_post(post_id: str):
 # ==========================================
 # ADMIN: FETCH PENDING COMPANIES
 # ==========================================
-# <-- 3. MOVED THIS UP ABOVE THE ROUTERS
 @app.get("/companies/pending")
 def get_pending_companies(): 
     try:
@@ -100,13 +91,8 @@ app.include_router(admin.router, prefix="/admin", tags=["Admin"])
 def get_platform_stats():
     try:
         # Count documents in the database collections
-        # Assuming your users collection is named 'users' and jobs is 'jobs'
         total_users = db.users.count_documents({})
         active_jobs = db.jobs.count_documents({})
-        
-        # If you save roles in your user documents, you can get specific:
-        # job_seekers = db.users.count_documents({"role": "Job Seeker"})
-        # hr_accounts = db.users.count_documents({"role": "HR"})
         
         return {
             "total_users": total_users,
