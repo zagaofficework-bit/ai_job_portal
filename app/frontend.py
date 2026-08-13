@@ -19,7 +19,7 @@ def load_css(file_name):
         st.warning(f"CSS file not found: {file_name}")
 
 # Execute the function to apply your styles!
-load_css("assets/style.css") 
+load_css("../assets/style.css") 
 
 # ==========================================
 #          SESSION STATE (MEMORY)
