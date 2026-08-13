@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import os # Added to safely handle file paths
 
-API_URL = "https://ai-job-portal-i98p.onrender.com/api/v2"
+API_URL = "https://ai-job-portal-i98p.onrender.com"
 
 st.set_page_config(page_title="AI Job Portal", page_icon="🚀", layout="wide")
 
